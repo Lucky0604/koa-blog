@@ -26,7 +26,7 @@ app.use(bodyParser());
 app.use(staticCache(config.staticCacheConf));
 app.use(logger());
 app.use(session({
-	store: new MongoStore(config.mongodb);
+	store: new MongoStore(config.mongodb)
 }));
 
 app.use(flash());

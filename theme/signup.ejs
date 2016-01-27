@@ -1,0 +1,50 @@
+<% include header %>
+	<div class="container">
+		<div class="ui form segment" style="width: 400px;margin: 40px auto;">
+			<form method="post">
+				<div class="two fields">
+					<div class="field required">
+						<label>Username:</label>
+						<input type="text" name="name" placeholder="Username">
+					</div>
+					<div class="field required">
+						<label>Gender</label>
+						<div class="ui selection dropdown">
+							<div class="default text">Select Gender</div>
+							<i class="dropdown icon"></i>
+							<input type="hidden" name="gender">
+							<div class="menu">
+								<div class="item" data-value="Male">Male</div>
+								<div class="item" data-value="Female">Female</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="two fields">
+					<div class="field required">
+						<label>Password</label>
+						<input type="password" name="password" placeholder="Password">
+					</div>
+					<div class="field required">
+						<label>Re_Password</label>
+						<input type="password" name="re_password" placeholder="Re_Password">
+					</div>
+				</div>
+
+				<div class="field required">
+					<label>Email: </label>
+					<input type="email" name="email" placeholder="Email">
+				</div>
+				<div class="field">
+					<label>Signature</label>
+					<input type="text" placeholder="less than 50 words" name="signature">
+				</div>
+				<input type="submit" class="ui button fluid" value="Regist">
+			</form>
+		</div>
+	</div>
+
+	<script>
+	$('.ui.dropdown').dropdown();
+	</script>
+<% include footer %>
