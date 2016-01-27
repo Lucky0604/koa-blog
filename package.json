@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=default DEBUG=* node app"
+    "test": "NODE_ENV=default DEBUG=* node app",
+    "preinstall": "cd theme && npm install"
   },
   "dependencies": {
     "co-cache": "2.0.1",
