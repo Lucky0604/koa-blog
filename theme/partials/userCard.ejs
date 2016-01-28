@@ -1,0 +1,30 @@
+<% var userInfo = yield $User.getUserByName(name) %>
+<div class="ui cards">
+    <div class="card">
+        <div class="content">
+            <div class="userCard">
+                <img src="<%=: userInfo.email | gravatar %>" alt="">
+                <div class="info">
+                    <p><%= userInfo.name %></p>
+                    <p class="meta"><%= userInfo.gender %></p>
+                </div>
+            </div>
+
+            <div class="description">
+                <%= userInfo.signature %>
+            </div>
+        </div>
+
+        <% if ($this.session.user) {%>
+            <div class="extra content">
+                <a href="/user/<%= userInfo.name %>" class=""><i class="home icon"></i>Homepage</a>
+                <a class="right floated"><i class="setting icon"></i>Setting</a>
+            </div>
+        <% } else { %>
+            <div class="extra content">
+                <a href=""><i class="send icon"></i>Mail</a>
+                <a class="right floated"><i class="plus icon"></i>Add as friend</a>
+            </div>
+        <% } %>
+    </div>
+</div>
