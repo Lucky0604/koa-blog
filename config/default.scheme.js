@@ -2,6 +2,8 @@ var validator = require('validator');
 var crypto = require('crypto');
 
 module.exports = {
+
+	// sign up
 	"(GET | POST) /signup": {
 		"request": {
 			"session": checkNotLogin
@@ -13,6 +15,19 @@ module.exports = {
 			"body": checkSignupBody
 		}
 	},
+
+	//sign in
+	"(GET | POST) /signin": {
+		"request": {
+			"session": checkNotLogin
+		}
+	},
+	"POST /signin": {
+		"request": {
+			"body": checkSigninBody
+		}
+	}
+
 }
 
 // md5
@@ -64,6 +79,28 @@ function checkSignupBody() {
 	}
 	body.name = validator.trim(body.name);
 	body.email = validator.trim(body.email);
+	body.password = md5(validator.trim(body.password));
+	return true;
+}
+
+// check the sign in request's body info
+function checkSigninBody() {
+	var body = this.request.body;
+	var flash;
+
+	if (!body || !body.name) {
+		flash = {error: 'Please write your username'};
+	} else if (!body.password) {
+		flash = {error: 'Please write your password'};
+	}
+
+	if (flash) {
+		this.flash = flash;
+		this.redirect('back');
+		return false;
+	}
+
+	body.name = validator.trim(body.name);
 	body.password = md5(validator.trim(body.password));
 	return true;
 }
