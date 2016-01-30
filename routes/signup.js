@@ -10,7 +10,7 @@ exports.post = function* () {
 
 	var userExist = yield $User.getUserByName(data.name);
 	if (userExist) {
-		this.flash({error: 'Username exist!'});
+		this.flash = {error: 'Username exist!'};
 		return this.redirect('/');
 	}
 
