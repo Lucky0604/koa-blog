@@ -1,0 +1,58 @@
+<% include header %>
+
+<div class="container">
+    <div class="ui two column centered grid">
+        <div class="right floated left aligned four wide column">
+            <% var name = this.session.user.name; %>
+            <% include partials/userCard %>
+            <% include partials/noReplyCard %>
+        </div>
+
+        <div class="left floated twelve wide column">
+            <form method="post">
+                <div class="ui form segment">
+                    <h2 style="margin-top: 0;">Post Topics: </h2>
+                    <div class="field">
+                        <div class="fields">
+                            <div class="field required">
+                                <label>Tab</label>
+                                <div class="ui selection dropdown">
+                                    <input type="hidden" name="tab">
+                                    <div class="default text">Tab</div>
+                                    <i class="dropdown icon"></i>
+                                    <div class="menu">
+                                        <% $app.tabs.slice(1).forEach(function (tab) { %>
+                                            <div class="item" data-value="<%= tab %>">
+                                                <%= tab %>
+                                            </div>
+                                        <% }) %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field required">
+                        <label>Title: </label>
+                        <input type="text" name="title" placeholder="Title can't less than 15 words">
+                    </div>
+
+                    <div class="field required">
+                        <label>Content: </label>
+                        <textarea name="content" cols="30" rows="10"></textarea>
+                    </div>
+
+                    <input type="submit" class="ui button" value="Post">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.ui.dropdown').dropdown();
+</script>
+
+
+
+<% include footer %>

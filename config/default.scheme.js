@@ -26,6 +26,26 @@ module.exports = {
 		"request": {
 			"body": checkSigninBody
 		}
+	},
+
+	// post page and topics page
+	"(GET | POST) /create": {
+		"request": {
+			"session": checkLogin
+		}
+	},
+	"POST /create": {
+		"request": {
+			"body": checkCreateBody
+		}
+	},
+
+	// get topics by id
+	"POST /topic/:id": {
+		"request": {
+			"session": checkLogin,
+			"body": checkReplyTopic
+		}
 	}
 
 }
@@ -102,5 +122,51 @@ function checkSigninBody() {
 
 	body.name = validator.trim(body.name);
 	body.password = md5(validator.trim(body.password));
+	return true;
+}
+
+// check the create body info
+function checkCreateBody() {
+	var body = this.request.body;
+	var flash;
+
+	if (!body || !body.title || body.title.length < 10) {
+		flash = {error: 'Please write valid Title'};
+	} else if (!body.tab) {
+		flash = {error: 'Please select a tab'};
+	} else if (!body.content) {
+		flash = {error: 'Please write the content'};
+	}
+
+	if (flash) {
+		this.flash = flash;
+		this.redirect('back');
+		return false;
+	}
+
+	body.title = validator.trim(body.title);
+	body.tab = validator.trim(body.tab);
+	body.content = validator.trim(body.content);
+	return true;
+}
+
+// check the reply topics
+function checkReplyTopic() {
+	var body = this.request.body;
+	var flash;
+
+	if (!body || !body.topic_id || !validator.isMongoId(body.topic_id)) {
+		flash = {error: "Your reply's topic is not exist"};
+	} else if (!body.content) {
+		flash = {error: "Your comment is empty!"};
+	}
+
+	if (flash) {
+		this.flash = flash;
+		this.redirect('back');
+		return false;
+	}
+
+	body.content = validator.trim(body.content);
 	return true;
 }
