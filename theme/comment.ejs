@@ -1,0 +1,42 @@
+<div class="ui segment">
+    <div class="ui comments">
+        <h3 class="ui header">Comment</h3>
+        <div class="ui divider"></div>
+
+        <% comments.forEach(function(comment) { %>
+            <div class="comment">
+                <a href="/user/<%= comment.user.name %>" class="avatar">
+                    <img src="<%=: comment.user.email | gravatar %>" alt="">
+                </a>
+
+                <div class="content">
+                    <a href="/user/<%= comment.user.name %>" class="author">
+                        <%= comment.user.name %>
+                    </a>
+
+                    <div class="metadata">
+                        <span class="date">
+                            <%=: comment.updated_at | fromNow %>
+                        </span>
+                    </div>
+
+                    <div class="text">
+                        <%-: comment.content | markdown %>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+
+        <% if ($this.session.user) { %>
+            <form method="post" class="ui reply form">
+
+                <input type="hidden" name="topic_id" value="<%= topic._id %>">
+                <div class="field">
+                    <textarea name="content" cols="30" rows="10"></textarea>
+                </div>
+
+                <input type="submit" class="ui button" value="Reply">
+            </form>
+        <% } %>
+    </div>
+</div>
